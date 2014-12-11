@@ -5,12 +5,12 @@ This log fetcher uses singularity endpoints to find and download log files relev
 
 ##Installation
 ```
-./install.sh
+pip install singularity-logfetch
 ```
 
 ##Configuration
 - Configuration can either be read from a file, or from command line arguments.
-- An example configuration files lives in this directory at .logfetch.example
+- An example configuration file can be seen in .logfetch.example
 - Any arguments specified in the log file can be overriden on the command line
 - You can store a number of configuration files for different clusters in the config directory (~/.logfetch by default) and choose which config to use with the -c option
 
