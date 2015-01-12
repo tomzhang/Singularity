@@ -10,6 +10,7 @@ FileBrowserSubview = require '../views/fileBrowserSubview'
 
 ExpandableTableSubview = require '../views/expandableTableSubview'
 SimpleSubview = require '../views/simpleSubview'
+ResourceSubview = require '../views/resourceSubview'
 
 TaskView = require '../views/task'
 
@@ -66,7 +67,7 @@ class TaskDetailController extends Controller
             model:    @models.task
             template: @templates.environment
 
-        @subviews.resourceUsage = new SimpleSubview
+        @subviews.resourceUsage = new ResourceSubview
             model:    @models.resourceUsage
             template: @templates.resourceUsage
 
