@@ -16,6 +16,7 @@ import com.hubspot.singularity.executor.SingularityExecutorMonitor.SubmitState;
 import com.hubspot.singularity.executor.config.SingularityExecutorTaskBuilder;
 import com.hubspot.singularity.executor.task.SingularityExecutorTask;
 import com.hubspot.singularity.executor.utils.ExecutorUtils;
+import com.hubspot.singularity.runner.base.shared.SentryNotifier;
 
 public class SingularityExecutor implements Executor {
 
@@ -24,12 +25,14 @@ public class SingularityExecutor implements Executor {
   private final SingularityExecutorTaskBuilder taskBuilder;
   private final SingularityExecutorMonitor monitor;
   private final ExecutorUtils executorUtils;
+  private final SentryNotifier sentryNotifier;
 
   @Inject
-  public SingularityExecutor(SingularityExecutorMonitor monitor, ExecutorUtils executorUtils, SingularityExecutorTaskBuilder taskBuilder) {
+  public SingularityExecutor(SingularityExecutorMonitor monitor, ExecutorUtils executorUtils, SingularityExecutorTaskBuilder taskBuilder, SentryNotifier sentryNotifier) {
     this.taskBuilder = taskBuilder;
     this.monitor = monitor;
     this.executorUtils = executorUtils;
+    this.sentryNotifier = sentryNotifier;
   }
 
   /**
@@ -94,6 +97,7 @@ public class SingularityExecutor implements Executor {
       LOG.error("Unexpected exception starting task {}", taskId, t);
 
       executorUtils.sendStatusUpdate(executorDriver, taskInfo, TaskState.TASK_LOST, String.format("Unexpected exception while launching task %s - %s", taskId, t.getMessage()), LOG);
+      sentryNotifier.notify(t);
     }
   }
 
