@@ -2,6 +2,7 @@ package com.hubspot.singularity.executor.cleanup;
 
 import java.nio.file.Paths;
 
+import com.hubspot.singularity.docker.SingularityDockerClientModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,7 @@ public class SingularityExecutorCleanupRunner {
     final long start = System.currentTimeMillis();
 
     try {
-      final Injector injector = Guice.createInjector(Stage.PRODUCTION, new SingularityRunnerBaseModule(SingularityExecutorCleanupConfiguration.class, ImmutableSet.of(SingularityS3Configuration.class, SingularityExecutorConfiguration.class)), new SingularityExecutorModule(), new SingularityExecutorCleanupModule(), new SingularityClientModule(), new SingularityMesosClientModule());
+      final Injector injector = Guice.createInjector(Stage.PRODUCTION, new SingularityRunnerBaseModule(SingularityExecutorCleanupConfiguration.class, ImmutableSet.of(SingularityS3Configuration.class, SingularityExecutorConfiguration.class)), new SingularityExecutorModule(), new SingularityExecutorCleanupModule(), new SingularityClientModule(), new SingularityMesosClientModule(), new SingularityDockerClientModule());
 
       final SingularityExecutorCleanupRunner runner = injector.getInstance(SingularityExecutorCleanupRunner.class);
 

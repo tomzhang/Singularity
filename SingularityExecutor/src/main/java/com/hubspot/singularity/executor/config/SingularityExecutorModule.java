@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
-import com.google.common.base.Optional;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -13,8 +12,6 @@ import com.hubspot.singularity.executor.handlebars.BashEscapedHelper;
 import com.hubspot.singularity.executor.handlebars.IfPresentHelper;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.AsyncHttpClientConfig;
-import com.spotify.docker.client.DefaultDockerClient;
-import com.spotify.docker.client.DockerClient;
 
 public class SingularityExecutorModule extends AbstractModule {
   public static final String RUNNER_TEMPLATE = "runner.sh";
@@ -75,11 +72,5 @@ public class SingularityExecutorModule extends AbstractModule {
     handlebars.registerHelper(IfPresentHelper.NAME, new IfPresentHelper());
 
     return handlebars;
-  }
-
-  @Provides
-  @Singleton
-  public DockerClient providesDockerClient() {
-    return new DefaultDockerClient("unix:///var/run/docker.sock");
   }
 }

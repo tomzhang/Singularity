@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.spotify.docker.client.DockerClient;
+import com.hubspot.singularity.docker.SingularityDockerClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,10 +56,10 @@ public class SingularityExecutorCleanup {
   private final SingularityExecutorCleanupConfiguration cleanupConfiguration;
   private final MesosClient mesosClient;
   private final ProcessUtils processUtils;
-  private final DockerClient dockerClient;
+  private final SingularityDockerClient dockerClient;
 
   @Inject
-  public SingularityExecutorCleanup(SingularityClient singularityClient, JsonObjectFileHelper jsonObjectFileHelper, SingularityRunnerBaseConfiguration baseConfiguration, SingularityExecutorConfiguration executorConfiguration, SingularityExecutorCleanupConfiguration cleanupConfiguration, TemplateManager templateManager, MesosClient mesosClient, DockerClient dockerClient) {
+  public SingularityExecutorCleanup(SingularityClient singularityClient, JsonObjectFileHelper jsonObjectFileHelper, SingularityRunnerBaseConfiguration baseConfiguration, SingularityExecutorConfiguration executorConfiguration, SingularityExecutorCleanupConfiguration cleanupConfiguration, TemplateManager templateManager, MesosClient mesosClient, SingularityDockerClient dockerClient) {
     this.jsonObjectFileHelper = jsonObjectFileHelper;
     this.baseConfiguration = baseConfiguration;
     this.executorConfiguration = executorConfiguration;

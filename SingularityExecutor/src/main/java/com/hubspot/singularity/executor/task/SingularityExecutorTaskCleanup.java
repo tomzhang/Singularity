@@ -6,14 +6,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import com.hubspot.singularity.docker.models.DockerContainer;
 import org.slf4j.Logger;
 
 import com.google.common.collect.ImmutableList;
 import com.hubspot.singularity.docker.SingularityDockerClient;
 import com.hubspot.singularity.executor.config.SingularityExecutorConfiguration;
 import com.hubspot.singularity.runner.base.shared.SimpleProcessManager;
-import com.spotify.docker.client.DockerClient;
-import com.spotify.docker.client.messages.Container;
 
 public class SingularityExecutorTaskCleanup {
 
@@ -104,7 +103,7 @@ public class SingularityExecutorTaskCleanup {
     try {
       if (!checkContainerRemoved()) {
         log.info(String.format("Attempting to remove container %s", taskDefinition.getTaskId()));
-        dockerClient.removeContainer(taskDefinition.getTaskId());
+        dockerClient.removeContainer(taskDefinition.getTaskId(), true);
       }
     } catch (Exception e) {
       log.info(String.format("Could not ensure removal of docker container due to error %s", e));
@@ -114,7 +113,7 @@ public class SingularityExecutorTaskCleanup {
 
   private boolean checkContainerRemoved() {
     try {
-      for (Container info : dockerClient.listContainers()) {
+      for (DockerContainer info : dockerClient.listContainers()) {
         if (info.names().contains(taskDefinition.getTaskId())) {
           return true;
         }

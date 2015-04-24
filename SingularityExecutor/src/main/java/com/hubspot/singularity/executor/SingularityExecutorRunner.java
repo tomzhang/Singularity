@@ -1,5 +1,6 @@
 package com.hubspot.singularity.executor;
 
+import com.hubspot.singularity.docker.SingularityDockerClientModule;
 import org.apache.mesos.MesosExecutorDriver;
 import org.apache.mesos.Protos;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class SingularityExecutorRunner {
     final long start = System.currentTimeMillis();
 
     try {
-      final Injector injector = Guice.createInjector(Stage.PRODUCTION, new SingularityRunnerBaseModule(SingularityExecutorConfiguration.class, ImmutableSet.<Class<? extends BaseRunnerConfiguration>>of(SingularityS3Configuration.class)), new SingularityExecutorModule());
+      final Injector injector = Guice.createInjector(Stage.PRODUCTION, new SingularityRunnerBaseModule(SingularityExecutorConfiguration.class, ImmutableSet.<Class<? extends BaseRunnerConfiguration>>of(SingularityS3Configuration.class)), new SingularityExecutorModule(), new SingularityDockerClientModule());
       final SingularityExecutorRunner executorRunner = injector.getInstance(SingularityExecutorRunner.class);
 
       final Protos.Status driverStatus = executorRunner.run();

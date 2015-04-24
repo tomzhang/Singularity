@@ -18,7 +18,6 @@ import com.hubspot.singularity.executor.models.EnvironmentContext;
 import com.hubspot.singularity.executor.models.RunnerContext;
 import com.hubspot.singularity.executor.task.SingularityExecutorArtifactFetcher.SingularityExecutorTaskArtifactFetcher;
 import com.hubspot.singularity.executor.utils.ExecutorUtils;
-import com.spotify.docker.client.DockerClient;
 
 public class SingularityExecutorTaskProcessBuilder implements Callable<ProcessBuilder> {
 

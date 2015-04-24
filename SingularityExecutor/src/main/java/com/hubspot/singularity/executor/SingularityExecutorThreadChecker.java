@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.hubspot.singularity.docker.exceptions.DockerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.NOPLogger;
@@ -22,8 +23,6 @@ import com.hubspot.singularity.executor.config.SingularityExecutorConfiguration;
 import com.hubspot.singularity.executor.task.SingularityExecutorTaskProcessCallable;
 import com.hubspot.singularity.runner.base.shared.ProcessFailedException;
 import com.hubspot.singularity.runner.base.shared.SimpleProcessManager;
-import com.spotify.docker.client.DockerClient;
-import com.spotify.docker.client.DockerException;
 
 @Singleton
 public class SingularityExecutorThreadChecker {
@@ -107,7 +106,7 @@ public class SingularityExecutorThreadChecker {
     Optional<Integer> dockerPid = Optional.absent();
     if (taskProcess.getTask().getTaskInfo().hasContainer() && taskProcess.getTask().getTaskInfo().getContainer().hasDocker()) {
       try {
-        dockerPid = Optional.of(dockerClient.inspectContainer(taskProcess.getTask().getTaskId()).state().pid());
+        dockerPid = Optional.of(dockerClient.inspectContainer(taskProcess.getTask().getTaskId()).state().getPid());
       } catch (DockerException e) {
         throw new ProcessFailedException("Could not get docker root pid");
       }
