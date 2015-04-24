@@ -75,6 +75,7 @@
     <module>SingularityRunnerBase</module>
     <module>SingularityS3Base</module>
     <module>SingularityMesosClient</module>
+    <module>SingularityDockerClient</module>
     <module>SingularityClient</module>
     <module>SingularityExecutor</module>
     <module>SingularityExecutorCleanup</module>
@@ -109,6 +110,12 @@
       <dependency>
         <groupId>com.hubspot</groupId>
         <artifactId>SingularityMesosClient</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.hubspot</groupId>
+        <artifactId>SingularityDockerClient</artifactId>
         <version>${project.version}</version>
       </dependency>
 

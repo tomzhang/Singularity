@@ -2,12 +2,9 @@ package com.hubspot.singularity.executor.config;
 
 import java.nio.file.Path;
 
-import com.spotify.docker.client.DockerClient;
 import org.apache.mesos.ExecutorDriver;
 import org.apache.mesos.Protos;
 import org.apache.mesos.Protos.TaskInfo;
-
-import ch.qos.logback.classic.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
@@ -17,14 +14,17 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.hubspot.deploy.ExecutorData;
 import com.hubspot.mesos.MesosUtils;
+import com.hubspot.singularity.docker.SingularityDockerClient;
 import com.hubspot.singularity.executor.TemplateManager;
 import com.hubspot.singularity.executor.task.SingularityExecutorArtifactFetcher;
 import com.hubspot.singularity.executor.task.SingularityExecutorTask;
 import com.hubspot.singularity.executor.task.SingularityExecutorTaskDefinition;
 import com.hubspot.singularity.executor.utils.ExecutorUtils;
-import com.hubspot.singularity.runner.base.configuration.SingularityRunnerBaseConfiguration;
 import com.hubspot.singularity.runner.base.config.SingularityRunnerBaseModule;
+import com.hubspot.singularity.runner.base.configuration.SingularityRunnerBaseConfiguration;
 import com.hubspot.singularity.runner.base.shared.JsonObjectFileHelper;
+
+import ch.qos.logback.classic.Logger;
 
 @Singleton
 public class SingularityExecutorTaskBuilder {
@@ -36,7 +36,7 @@ public class SingularityExecutorTaskBuilder {
   private final SingularityRunnerBaseConfiguration baseConfiguration;
   private final SingularityExecutorConfiguration executorConfiguration;
   private final SingularityExecutorArtifactFetcher artifactFetcher;
-  private final DockerClient dockerClient;
+  private final SingularityDockerClient dockerClient;
 
   private final SingularityExecutorLogging executorLogging;
   private final ExecutorUtils executorUtils;
@@ -48,7 +48,7 @@ public class SingularityExecutorTaskBuilder {
   @Inject
   public SingularityExecutorTaskBuilder(ObjectMapper jsonObjectMapper, JsonObjectFileHelper jsonObjectFileHelper, TemplateManager templateManager,
       SingularityExecutorLogging executorLogging, SingularityRunnerBaseConfiguration baseConfiguration, SingularityExecutorConfiguration executorConfiguration, @Named(SingularityRunnerBaseModule.PROCESS_NAME) String executorPid,
-      ExecutorUtils executorUtils, SingularityExecutorArtifactFetcher artifactFetcher, DockerClient dockerClient) {
+      ExecutorUtils executorUtils, SingularityExecutorArtifactFetcher artifactFetcher, SingularityDockerClient dockerClient) {
     this.jsonObjectFileHelper = jsonObjectFileHelper;
     this.jsonObjectMapper = jsonObjectMapper;
     this.templateManager = templateManager;

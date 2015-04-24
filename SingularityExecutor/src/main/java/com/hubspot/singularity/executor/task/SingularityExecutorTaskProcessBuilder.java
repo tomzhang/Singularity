@@ -4,20 +4,21 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import com.hubspot.singularity.executor.models.DockerContext;
-import com.spotify.docker.client.DockerClient;
 import org.apache.mesos.Protos.TaskInfo;
 import org.apache.mesos.Protos.TaskState;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.hubspot.deploy.ExecutorData;
+import com.hubspot.singularity.docker.SingularityDockerClient;
 import com.hubspot.singularity.executor.TemplateManager;
 import com.hubspot.singularity.executor.config.SingularityExecutorConfiguration;
+import com.hubspot.singularity.executor.models.DockerContext;
 import com.hubspot.singularity.executor.models.EnvironmentContext;
 import com.hubspot.singularity.executor.models.RunnerContext;
 import com.hubspot.singularity.executor.task.SingularityExecutorArtifactFetcher.SingularityExecutorTaskArtifactFetcher;
 import com.hubspot.singularity.executor.utils.ExecutorUtils;
+import com.spotify.docker.client.DockerClient;
 
 public class SingularityExecutorTaskProcessBuilder implements Callable<ProcessBuilder> {
 
@@ -36,7 +37,7 @@ public class SingularityExecutorTaskProcessBuilder implements Callable<ProcessBu
 
   private Optional<SingularityExecutorTaskArtifactFetcher> taskArtifactFetcher;
 
-  private DockerClient dockerClient;
+  private SingularityDockerClient dockerClient;
 
   public SingularityExecutorTaskProcessBuilder(SingularityExecutorTask task,
                                                ExecutorUtils executorUtils,
@@ -44,7 +45,7 @@ public class SingularityExecutorTaskProcessBuilder implements Callable<ProcessBu
                                                TemplateManager templateManager,
                                                SingularityExecutorConfiguration configuration,
                                                ExecutorData executorData, String executorPid,
-                                               DockerClient dockerClient) {
+                                               SingularityDockerClient dockerClient) {
     this.executorData = executorData;
     this.task = task;
     this.executorUtils = executorUtils;

@@ -6,23 +6,24 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.google.common.base.Optional;
-import com.spotify.docker.client.DockerClient;
-import com.spotify.docker.client.DockerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.NOPLogger;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.hubspot.mesos.JavaUtils;
+import com.hubspot.singularity.docker.SingularityDockerClient;
 import com.hubspot.singularity.executor.SingularityExecutorMonitor.KillState;
 import com.hubspot.singularity.executor.config.SingularityExecutorConfiguration;
 import com.hubspot.singularity.executor.task.SingularityExecutorTaskProcessCallable;
 import com.hubspot.singularity.runner.base.shared.ProcessFailedException;
 import com.hubspot.singularity.runner.base.shared.SimpleProcessManager;
+import com.spotify.docker.client.DockerClient;
+import com.spotify.docker.client.DockerException;
 
 @Singleton
 public class SingularityExecutorThreadChecker {
@@ -31,12 +32,12 @@ public class SingularityExecutorThreadChecker {
 
   private final SingularityExecutorConfiguration configuration;
   private final ScheduledExecutorService scheduledExecutorService;
-  private final DockerClient dockerClient;
+  private final SingularityDockerClient dockerClient;
 
   private SingularityExecutorMonitor monitor;
 
   @Inject
-  public SingularityExecutorThreadChecker(SingularityExecutorConfiguration configuration, DockerClient dockerClient) {
+  public SingularityExecutorThreadChecker(SingularityExecutorConfiguration configuration, SingularityDockerClient dockerClient) {
     this.configuration = configuration;
     this.dockerClient = dockerClient;
 

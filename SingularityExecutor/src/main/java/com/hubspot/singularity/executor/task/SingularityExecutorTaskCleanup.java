@@ -6,13 +6,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import com.spotify.docker.client.DockerClient;
-import com.spotify.docker.client.messages.Container;
 import org.slf4j.Logger;
 
 import com.google.common.collect.ImmutableList;
+import com.hubspot.singularity.docker.SingularityDockerClient;
 import com.hubspot.singularity.executor.config.SingularityExecutorConfiguration;
 import com.hubspot.singularity.runner.base.shared.SimpleProcessManager;
+import com.spotify.docker.client.DockerClient;
+import com.spotify.docker.client.messages.Container;
 
 public class SingularityExecutorTaskCleanup {
 
@@ -20,9 +21,9 @@ public class SingularityExecutorTaskCleanup {
   private final SingularityExecutorTaskLogManager taskLogManager;
   private final SingularityExecutorConfiguration configuration;
   private final Logger log;
-  private final DockerClient dockerClient;
+  private final SingularityDockerClient dockerClient;
 
-  public SingularityExecutorTaskCleanup(SingularityExecutorTaskLogManager taskLogManager, SingularityExecutorConfiguration configuration, SingularityExecutorTaskDefinition taskDefinition, Logger log, DockerClient dockerClient) {
+  public SingularityExecutorTaskCleanup(SingularityExecutorTaskLogManager taskLogManager, SingularityExecutorConfiguration configuration, SingularityExecutorTaskDefinition taskDefinition, Logger log, SingularityDockerClient dockerClient) {
     this.configuration = configuration;
     this.taskLogManager = taskLogManager;
     this.taskDefinition = taskDefinition;
